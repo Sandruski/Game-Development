@@ -1,8 +1,31 @@
 #include <iostream>
 using namespace std;
+
 #include "DynamicArray.h"
 #include "DoublyLinkedList.h"
 
+void List::addData(DynArray& dynArray) const {
+	if (first != nullptr) {
+		node* iterator = first;
+		int i = 0;
+		bool yes = true;
+
+		while (iterator != nullptr) {
+			dynArray.insert(dynArray.size(), iterator->value);
+
+			iterator = iterator->next;
+		}
+	}
+}
+
+void DynArray::addData(List& list) const {
+	if (size() != 0) {
+
+		for (int i = 0; i < numElems; i++) {
+			list.pushBack(arrayElems[i]);
+		}
+	}
+}
 
 int main() {
 	List l;
@@ -20,7 +43,7 @@ int main() {
 	l.print();
 
 	cout << "Linked List data to a Dynamic Array:" << endl;
-	//l.addData(d);
+	l.addData(d);
 	d.print();
 
 	cout << "Dynamic Array data to a Linked List:" << endl;

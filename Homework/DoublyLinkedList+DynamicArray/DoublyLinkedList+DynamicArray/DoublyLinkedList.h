@@ -3,8 +3,11 @@
 
 #include "DynamicArray.h"
 
+class DynArray;
 
 class List {
+	friend class DynArray;
+
 public:
 	List();
 	~List();
@@ -28,7 +31,7 @@ public:
 	void print() const;
 
 	//Add data to a Dynamic Array
-	//void addData(DynArray& dynArray) const;
+	void addData(DynArray& dynArray) const;
 
 private:
 	struct node {
@@ -39,16 +42,13 @@ private:
 	node* first;
 };
 
-
 List::List() {
 	first = nullptr;
 }
 
-
 List::~List() {
 	clear();
 }
-
 
 void List::pushFront(const int& elem) {
 	node* new_node = new node;
@@ -61,7 +61,6 @@ void List::pushFront(const int& elem) {
 
 	first = new_node;
 }
-
 
 void List::pushBack(const int& elem) {
 	node* new_node = new node;
@@ -90,7 +89,6 @@ void List::pushBack(const int& elem) {
 	}
 }
 
-
 void List::popFront() {
 	if (first != nullptr) {
 		node* aux = first;
@@ -104,7 +102,6 @@ void List::popFront() {
 		delete aux;
 	}
 }
-
 
 void List::popBack() {
 	if (first != nullptr) {
@@ -129,7 +126,6 @@ void List::popBack() {
 		}
 	}
 }
-
 
 void List::insert(unsigned int pos, const int& elem) {
 	node* new_node = new node;
@@ -169,7 +165,6 @@ void List::insert(unsigned int pos, const int& elem) {
 	}
 }
 
-
 void List::remove(unsigned int pos) {
 
 	if (first != nullptr && pos < size() && pos >= 0) {
@@ -199,7 +194,6 @@ void List::remove(unsigned int pos) {
 	}
 }
 
-
 int List::front() const {
 	if (first != nullptr) {
 		return first->value;
@@ -209,7 +203,6 @@ int List::front() const {
 		return 0;
 	}
 }
-
 
 int List::back() const {
 	if (first != nullptr) {
@@ -226,7 +219,6 @@ int List::back() const {
 		return 0;
 	}
 }
-
 
 int List::getValue(unsigned int pos) const {
 	if (first != nullptr && pos < size() && pos >= 0) {
@@ -247,11 +239,9 @@ int List::getValue(unsigned int pos) const {
 	}
 }
 
-
 bool List::empty() const {
 	return first == nullptr;
 }
-
 
 int List::size() const {
 	int i = 0;
@@ -270,7 +260,6 @@ int List::size() const {
 	return i;
 }
 
-
 void List::clear() {
 
 	while (first != nullptr) {
@@ -284,7 +273,6 @@ void List::clear() {
 
 	first = nullptr;
 }
-
 
 void List::print() const {
 
@@ -300,21 +288,5 @@ void List::print() const {
 		cout << endl;
 	}
 }
-
-/*
-void List::addData(DynArray& dynArray) const {
-	if (first != nullptr) {
-		node* iterator = first;
-		int i = 0;
-		bool yes = true;
-
-		while (iterator != nullptr) {
-			dynArray.insert(dynArray.size(), iterator->value);
-
-			iterator = iterator->next;
-		}
-	}
-}
-*/
 
 #endif

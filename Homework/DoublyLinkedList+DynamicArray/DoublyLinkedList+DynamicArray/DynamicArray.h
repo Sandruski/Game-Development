@@ -7,7 +7,11 @@
 #include <assert.h>
 #include "DoublyLinkedList.h"
 
+class List;
+
 class DynArray {
+	friend class List;
+
 public:
 	DynArray();
 	DynArray(unsigned int memSize);
@@ -35,13 +39,11 @@ private:
 	unsigned int numElems;
 };
 
-
 DynArray::DynArray() {
 	memSize = MIN_ARRAY_BLOCK_SIZE;
 	numElems = 0;
 	allocMem(memSize);
 }
-
 
 DynArray::DynArray(unsigned int memSize) {
 	this->memSize = memSize;
@@ -49,14 +51,12 @@ DynArray::DynArray(unsigned int memSize) {
 	allocMem(this->memSize);
 }
 
-
 DynArray::~DynArray() {
 	if (arrayElems != nullptr) {
 		delete[] arrayElems;
 		arrayElems = nullptr;
 	}
 }
-
 
 bool DynArray::empty() const {
 	return numElems == 0;
@@ -66,7 +66,6 @@ bool DynArray::empty() const {
 unsigned int DynArray::size() const {
 	return numElems;
 }
-
 
 bool DynArray::insert(unsigned int index, const int& elem) {
 	/*Cosas a tener en cuenta:
@@ -120,7 +119,6 @@ bool DynArray::insert(unsigned int index, const int& elem) {
 
 }
 
-
 bool DynArray::remove(unsigned int index) {
 	if (index >= 0 && index <= numElems) {
 
@@ -135,18 +133,15 @@ bool DynArray::remove(unsigned int index) {
 	}
 }
 
-
 int& DynArray::operator[] (unsigned int index) const {
 	assert(index < numElems);
 	return arrayElems[index];
 }
 
-
 void DynArray::shrinkToFit() {
 	if (numElems == memSize)
 		allocMem(numElems + MIN_ARRAY_BLOCK_SIZE);
 }
-
 
 void DynArray::print() const {
 	if (numElems != 0) {
@@ -160,7 +155,6 @@ void DynArray::print() const {
 	}
 }
 
-
 //private function
 void DynArray::allocMem(unsigned int memSize) {
 	int* aux = arrayElems;
@@ -173,15 +167,6 @@ void DynArray::allocMem(unsigned int memSize) {
 	}
 
 	delete[] aux;
-}
-
-void DynArray::addData(List& list) const {
-	if (size() != 0) {
-		
-		for (int i = 0; i < numElems; i++) {
-			list.pushBack(arrayElems[i]);
-		}
-	}
 }
 
 #endif

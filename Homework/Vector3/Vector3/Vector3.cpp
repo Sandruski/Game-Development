@@ -6,13 +6,13 @@ int main() {
 	Vec3<float> a(0, 2.9, -3), b(2.1, 5, -9.5);
 	Vec3<float> d(2.1, 5, -9.5);
 
-	cout << "a(" << a.get_x() << ", " << a.get_y() << ", " << a.get_z() << ")" << endl;
-	a.set_x(4);
+	cout << "a(" << a.x << ", " << a.y << ", " << a.z << ")" << endl;
+	a.x = 4;
 	cout << "Setting a.x to 4..." << endl;
-	cout << "a.x = " << a.get_x() << endl;
+	cout << "a.x = " << a.x << endl;
 
 	Vec3<float> c = a + b;
-	cout << "c(" << c.get_x() << ", " << c.get_y() << ", " << c.get_z() << ")" << endl;
+	cout << "c(" << c.x << ", " << c.y << ", " << c.z << ")" << endl;
 
 	if (a == c)
 		cout << "a is equal to c" << endl;
@@ -23,6 +23,51 @@ int main() {
 		cout << "d is equal to b" << endl;
 	else
 		cout << "d is not equal to b" << endl;
+
+	cout << endl;
+
+	Vec3<int> x(1, 2, -3), y(-2, 1, 5);
+
+	cout << "Original vectors:" << endl;
+	cout << "x(" << x.x << ", " << x.y << ", " << x.z << ")" << endl;
+	cout << "y(" << y.x << ", " << y.y << ", " << y.z << ")" << endl;
+
+	cout << endl;
+	cout << "Setting x to zero..." << endl;
+	x.zero();
+	cout << "x(" << x.x << ", " << x.y << ", " << x.z << ")" << endl;
+	cout << endl;
+	cout << "Setting x to its original values..." << endl;
+	x.x = 1;
+	x.y = 2;
+	x.z = -3;
+
+	cout << endl;
+	x += y;
+	cout << "x += y" << endl;
+	cout << "x(" << x.x << ", " << x.y << ", " << x.z << ")" << endl;
+	cout << "y(" << y.x << ", " << y.y << ", " << y.z << ")" << endl;
+
+	cout << endl;
+	x -= y;
+	cout << "x -= y" << endl;
+	cout << "x(" << x.x << ", " << x.y << ", " << x.z << ")" << endl;
+	cout << "y(" << y.x << ", " << y.y << ", " << y.z << ")" << endl;
+
+	cout << endl;
+	cout << "Multiply y*k. Introduce your k: " << endl;
+	int k = 1;
+	cin >> k;
+
+	Vec3<int> z;
+	z = y * k;
+
+	cout << "z(" << z.x << ", " << z.y << ", " << z.z << ")" << endl;
+
+	cout << endl;
+	int result = 0;
+	result = x * y;
+	cout << "Dot product:" << endl << "x * y = " << result << endl;
 
 	cout << endl;
 	system("pause");
