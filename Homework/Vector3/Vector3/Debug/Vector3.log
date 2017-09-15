@@ -1,0 +1,5 @@
+﻿  Vector3.cpp
+c:\users\disob\desktop\upc\2n\desenvolupament\vector3\vector3\vector3.cpp(6): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\disob\desktop\upc\2n\desenvolupament\vector3\vector3\vector3.cpp(7): warning C4305: 'argument': truncation from 'double' to 'float'
+  Vector3.vcxproj -> C:\Users\disob\Desktop\UPC\2n\DESENVOLUPAMENT\Vector3\Debug\Vector3.exe
+  Vector3.vcxproj -> C:\Users\disob\Desktop\UPC\2n\DESENVOLUPAMENT\Vector3\Debug\Vector3.pdb (Partial PDB)
