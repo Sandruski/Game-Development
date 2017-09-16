@@ -58,16 +58,22 @@ void j1App::AddModule(j1Module* module)
 }
 
 // Called before render is available
-bool j1App::Awake()
+bool j1App::Awake(xml_node* p_node)
 {
-	if (xml_doc.load_file("config.xml"))
+	// TODO 3: Load config.xml file using load_file() method from the xml_document class.
+	// If everything goes well, load the top tag inside the xml_node property
+	// created in the last TODO
+
+	result = xml_doc.load_file("config.xml");
+
+	if (result)
 	{
 		cout << "XML parsed without errors" << endl;
-		LOG("XML parsed without errors");
+		node = xml_doc.child("config");
 	}
 	else {
 		cout << "XML parsed with errors" << endl;
-		LOG("XML parsed with errors");
+		cout << "Error description: " << result.description() << endl;
 	}
 
 	bool ret = true;
@@ -80,6 +86,16 @@ bool j1App::Awake()
 		// TODO 7: Add a new argument to the Awake method to receive a pointer to a xml node.
 		// If the section with the module name exist in config.xml, fill the pointer with the address of a valid xml_node
 		// that can be used to read all variables from that section. Send nullptr if the section does not exist in config.xml
+
+		if (item->data->name == "j1Window") {
+			p_node = &node;
+		}
+		else if (item->data->name == "j1Audio") {
+			p_node = &node;
+		}
+		else {
+			p_node = nullptr;
+		}
 
 		ret = item->data->Awake();
 		item = item->next;

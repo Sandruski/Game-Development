@@ -3,6 +3,9 @@
 #include "j1App.h"
 #include "j1Window.h"
 
+#include <iostream>
+using namespace std;
+
 #include "SDL/include/SDL.h"
 
 
@@ -73,6 +76,7 @@ bool j1Window::Awake()
 			// TODO 4: Read the title of the app from the XML
 			// and set directly the window title using SetTitle()
 
+			SetTitle(App->node.child("name").child_value());
 		}
 	}
 

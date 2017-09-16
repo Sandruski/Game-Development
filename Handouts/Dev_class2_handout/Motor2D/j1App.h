@@ -26,7 +26,7 @@ public:
 	virtual ~j1App();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(xml_node* p_node);
 
 	// Called before the first frame
 	bool Start();
@@ -71,6 +71,7 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 
+	xml_node node;
 
 private:
 
@@ -81,8 +82,9 @@ private:
 	// TODO 2: Create two new variables from pugui namespace:
 	// a xml_document to store the while config file and
 	// a xml_node to read specific branches of the xml
+	
 	xml_document xml_doc;
-	xml_node node;
+	xml_parse_result result;
 
 	int					argc;
 	char**				args;
