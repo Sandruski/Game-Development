@@ -9,8 +9,6 @@
 #include "p2SString.h"
 #include "PugiXml\src\pugixml.hpp"
 
-#include "j1App.h"
-
 class j1App;
 
 class j1Module
@@ -63,15 +61,9 @@ public:
 
 	// TODO 2: Create new virtual methods to Load and Save
 	
-	virtual void RealSave() const {
-		LOG("Saving...");
-		App->needs_save = false;
-	}
+	virtual void RealSave(pugi::xml_node&) const {}
 
-	virtual void RealLoad() {
-		LOG("Loading...");
-		App->needs_load = false;
-	}
+	virtual void RealLoad(pugi::xml_node&) {}
 
 	//Tots els mòduls podran reescriure aquest mètode.
 

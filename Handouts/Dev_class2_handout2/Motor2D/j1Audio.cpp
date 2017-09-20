@@ -8,6 +8,9 @@
 #include "SDL_mixer\include\SDL_mixer.h"
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
 
+#include <iostream>
+using namespace std;
+
 j1Audio::j1Audio() : j1Module()
 {
 	music = NULL;
@@ -173,8 +176,14 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	return ret;
 }
 
-// Save
-void j1Audio::Save() const
-{
+// Control music volume
+void j1Audio::MusicVolume(bool positive) {
+	if (positive && music_volume <= 120) {
+		cout << "Music volume was: " << Mix_VolumeMusic(music_volume += 8) << endl;
+	}
+	else if (!positive && music_volume >= 8) {
+		cout << "Music volume was: " << Mix_VolumeMusic(music_volume -= 8) << endl;
+	}
 
+	cout << "Music volume is now: " << Mix_VolumeMusic(-1) << endl;
 }

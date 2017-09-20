@@ -72,6 +72,12 @@ private:
 	// Call modules after each loop iteration
 	bool PostUpdate();
 
+	// Load save file
+	bool LoadSaveFile();
+
+	// Save current state
+	bool SaveCurrentState();
+
 public:
 
 	// Modules
@@ -99,6 +105,9 @@ private:
 	mutable bool needs_save = false, needs_load = false;
 	/*mutable: utilitzat en casos molt concrets, quan un mètode d'una classe no pot modificar els atributs de la classe, és a dir,
 	ha de ser constant, però necessita modificar un atribut concret de la classe. Amb 'mutable' ens saltem les regles*/
+
+	pugi::xml_document	save_file;
+	pugi::xml_node		save;
 };
 
 extern j1App* App;

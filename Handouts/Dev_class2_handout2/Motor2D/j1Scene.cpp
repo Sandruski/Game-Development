@@ -57,11 +57,17 @@ bool j1Scene::Update(float dt)
 
 	// TODO 5: Call load / save methods when pressing l/s
 
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		App->Load();
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		App->Save();
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		App->Load();
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		App->audio->MusicVolume(true);
+
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		App->audio->MusicVolume(false);
 
 	App->render->Blit(img, 0, 0);
 	return true;

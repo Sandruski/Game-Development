@@ -12,8 +12,6 @@
 #include "j1Scene.h"
 #include "j1App.h"
 
-using namespace std;
-
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -65,6 +63,8 @@ void j1App::AddModule(j1Module* module)
 bool j1App::Awake()
 {
 	bool ret = LoadConfig();
+
+	LoadSaveFile();
 
 	// self-config
 	title.create(app_config.child("title").child_value());
@@ -123,7 +123,6 @@ bool j1App::Update()
 	return ret;
 }
 
-
 // ---------------------------------------------
 bool j1App::LoadConfig()
 {
@@ -140,6 +139,11 @@ bool j1App::LoadConfig()
 	{
 		config = config_file.child("config");
 		app_config = config.child("app");
+
+		/*
+		1er_node = xml_document.fill("nom del fill");
+		2n_node = 1er_node.fill("nom del fill");
+		*/
 	}
 
 	return ret;
@@ -153,26 +157,36 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
-	// TODO 1: This is a good place to call Load / Save functions
+	// TODO 1: This is a good place to call load / Save functions
 
 	if (needs_save) {
+
+		SaveCurrentState();
+
 		p2List_item<j1Module*>* item;
 		item = modules.start;
 
 		while (item != NULL)
 		{
-			item->data->RealSave();
+			item->data->RealSave(save.child(item->data->name.GetString()));
 			item = item->next;
 		}
+
+		save_file.save_file("camera.xml");
+
+		needs_save = false;
 	}
 	else if (needs_load) {
+
 		p2List_item<j1Module*>* item;
 		item = modules.start;
 
 		while (item != NULL) {
-			item->data->RealLoad();
+			item->data->RealLoad(save.child(item->data->name.GetString()));
 			item = item->next;
 		}
+
+		needs_load = false;
 	}
 }
 
@@ -257,10 +271,14 @@ bool j1App::CleanUp()
 	return ret;
 }
 
-void j1App::Save() const
+void j1App::Save() const 
 {
+	/*Per què es posa 'const' si el mètode no és el RealSave()
+	i realment no fa la funció de guardar, sinó que només serveix
+	per canviar un bool d'una forma més elegant.
+	*/
 	needs_save = true;
-}
+}         
 
 void j1App::Load()
 {	
@@ -294,13 +312,45 @@ const char* j1App::GetOrganization() const
 	return organization.GetString();
 }
 
-
 // TODO 3: Create a simulation of the xml file to read 
 
 // TODO 4: Create a method to actually load an xml file
 // then call all the modules to load themselves
 
+bool j1App::LoadSaveFile()
+{
+	bool ret = true;
 
+	pugi::xml_parse_result result = save_file.load_file("camera.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file camera.xml. pugi error: %s", result.description());
+		ret = false;
+	}
+	else
+	{
+		save = save_file.child("save");
+	}
+
+	return ret;
+}
 
 // TODO 7: Create a method to save the current state
 
+bool j1App::SaveCurrentState()
+{	
+	bool ret = true;
+
+	p2List_item<j1Module*>* item;
+	item = modules.start;
+
+	while (item != NULL && ret == true)
+	{
+		if (save.child(item->data->name.GetString()) == NULL)
+			save.append_child(item->data->name.GetString());
+		item = item->next;
+	}
+
+	return ret;
+}
