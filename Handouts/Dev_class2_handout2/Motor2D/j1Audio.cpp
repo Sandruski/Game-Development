@@ -35,6 +35,8 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
+	music_volume = config.child("volume").attribute("default").as_int(64);
+
 	// load support for the JPG and PNG image formats
 	int flags = MIX_INIT_OGG;
 	int init = Mix_Init(flags);
@@ -186,4 +188,19 @@ void j1Audio::MusicVolume(bool positive) {
 	}
 
 	cout << "Music volume is now: " << Mix_VolumeMusic(-1) << endl;
+}
+
+void j1Audio::RealLoad(pugi::xml_node& save) {
+	music_volume = save.child("volume").attribute("default").as_int();
+	Mix_VolumeMusic(music_volume);
+}
+
+void j1Audio::RealSave(pugi::xml_node& save) const {
+
+	if (save.child("volume") == NULL) {
+		save.append_child("volume").append_attribute("default") = music_volume;
+	}
+	else {
+		save.child("volume").attribute("default").set_value(music_volume);
+	}
 }

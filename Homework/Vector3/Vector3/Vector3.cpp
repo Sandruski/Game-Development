@@ -34,8 +34,13 @@ int main() {
 
 	cout << endl;
 	cout << "Setting x to zero..." << endl;
-	x.zero();
+	x.set_to_zero();
 	cout << "x(" << x.x << ", " << x.y << ", " << x.z << ")" << endl;
+	if (x.is_zero())
+		cout << "x is zero" << endl;
+	else
+		cout << "x is not zero" << endl;
+
 	cout << endl;
 	cout << "Setting x to its original values..." << endl;
 	x.x = 1;
@@ -68,6 +73,10 @@ int main() {
 	int result = 0;
 	result = x * y;
 	cout << "Dot product:" << endl << "x * y = " << result << endl;
+
+	Vec3<int> distance1(1, 1, 1), distance2(2, 2, 2);
+
+	cout << "Distance between distance1 and distance2: " << distance1.distance(distance2) << endl;
 
 	cout << endl;
 	system("pause");

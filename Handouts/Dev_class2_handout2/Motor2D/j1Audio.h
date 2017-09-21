@@ -35,12 +35,18 @@ public:
 	// Controle music volume
 	void MusicVolume(bool positive);
 
+	// Save
+	void RealSave(pugi::xml_node&) const;
+
+	// Load
+	void RealLoad(pugi::xml_node&);
+
 private:
 
 	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
 
-	int music_volume = 64;
+	int music_volume;
 };
 
 #endif // __j1AUDIO_H__

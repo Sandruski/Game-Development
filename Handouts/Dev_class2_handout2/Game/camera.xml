@@ -3,7 +3,9 @@
 	<input />
 	<window />
 	<textures />
-	<audio />
+	<audio>
+		<volume default="48" />
+	</audio>
 	<scene />
 	<renderer>
 		<camera x="-137" y="328" />
