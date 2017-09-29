@@ -37,6 +37,27 @@ public:
 
 template <class TYPE>
 Vec3<TYPE>::Vec3(const TYPE& x, const TYPE& y, const TYPE& z) :x(x), y(y), z(z) {}
+/*
+Colisión de nombres: si mi atributo se llama 'x' y al argumento también lo llamamos 'x'.
+-En C, hay una preferencia de los argumentos, así que si escribimos 'x', se va a tratar del argumento.
+*/
+
+/*
+Todos los constructores de las clases retornan algo. Retornan un objeto de su tipo, la clase Vec3 creada, en este caso.
+No tienen el retorno escrito aunque está ahí, porque el usuario no puede elegir qué tipo de retorno va a tener. Siempre va a ser la misma clase.
+*/
+
+/*
+Diferencia entre puntero y REFERENCIA (como argumento de las funciones): una referencia:
+- Nunca es NULL // Al principio de los métodos, primero tenemos que comprobar si el puntero pasado como argumento es NULL. assert(puntero)
+- Comodidad para acceder a las variables (a.x) // Puntero: (a->x)
+- Comodidad para pasar la variable. funcion(a) // Puntero: funcion(&a)
+- No tiene toda la aritmética de punteros. nombre + 2 = nombre + 2 (actúa como variable) // Puntero: nombre + 2 = dirección de memoria 2 casillas más adelante del nombre
+*/
+
+/*
+Un mètode amb const al final, no pot cridar a altres mètodes que no tinguin aquest const.
+*/
 
 template <class TYPE>
 Vec3<TYPE>::Vec3(const Vec3& vec3) {
@@ -57,7 +78,7 @@ const Vec3<TYPE> Vec3<TYPE>::operator-(const Vec3& vec3) const {
 
 template <class TYPE>
 const Vec3<TYPE> Vec3<TYPE>::operator+=(const Vec3& vec3) { //Norma de C: els operadors de suma, resta, etc. sempre han de retornar un resultat. El retorn no pot ser 'void'.
-	return Vec3<TYPE>(x += vec3.x, y += vec3.y, z += vec3.z);
+	return Vec3<TYPE>(x += vec3.x, y += vec3.y, z += vec3.z); //return(*this);
 }
 
 template <class TYPE>
