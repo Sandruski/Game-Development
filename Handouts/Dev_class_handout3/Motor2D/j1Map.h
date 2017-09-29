@@ -14,9 +14,9 @@ enum Renderorder { empty1, right_down, right_up, left_down, left_up };
 // TODO 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
 
-struct TileSetInfo {
-	uint firstgrid = 0;
-	char* name = nullptr;
+struct TilesetInfo {
+	uint firstgid = 0;
+	p2SString name = nullptr;
 	uint tilewidth = 0;
 	uint tileheight = 0;
 	uint spacing = 0;
@@ -39,6 +39,14 @@ struct MapInfo {
 	uint tilewidth = 0;
 	uint tileheight = 0;
 	uint nextobjectid = 0;
+};
+
+// HOMEWORK: Load all layers
+
+struct LayerInfo {
+	p2SString name = nullptr;
+	uint width = 0;
+	uint height = 0;
 };
 
 // ----------------------------------------------------
@@ -64,7 +72,13 @@ public:
 	bool Load(const char* path);
 
 	// Load map data
-	bool LoadMap(const char* path);
+	bool LoadMap();
+
+	// Load tilset data
+	bool LoadTilesets();
+
+	// Load all layers
+	bool LoadLayers();
 
 private:
 
@@ -73,14 +87,23 @@ public:
 
 	// TODO 1: Add your struct for map info as public for now
 
-	MapInfo* mapInfo;
-	TileSetInfo* tileSetInfo;
+	MapInfo mapInfo;
+	TilesetInfo tilesetInfo;
+	LayerInfo layerInfo;
+
+	p2List<TilesetInfo> tilesetList;
+	p2List<LayerInfo> layerList;
 
 private:
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
+	bool				tilesets_loaded;
+	bool				layers_loaded;
+
+	SDL_Texture* tile;
+	bool load_tex = true;
 };
 
 #endif // __j1MAP_H__
