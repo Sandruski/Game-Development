@@ -34,20 +34,30 @@ void j1Map::Draw()
 	// TODO 6: Iterate all tilesets and draw all their 
 	// images in 0,0 (you should have only one tileset for now)
 
+	p2List_item<TilesetInfo>* item;
+	item = tilesetList.start;
+
+	int i = 0;
+
 	if (load_tex) {
-		p2List_item<TilesetInfo>* item;
-		item = tilesetList.start;
+
+		tile = new SDL_Texture*[tilesetList.count()];
 
 		while (item != NULL)
 		{
-			tile = App->tex->Load(item->data.name.GetString());
+			tile[i] = App->tex->Load(item->data.name.GetString());
+			i++;
 			item = item->next;
 		}
+
+		item = tilesetList.start;
+		i = 0;
 
 		load_tex = false;
 	}
 
-	App->render->Blit(tile, 0, 0);
+	App->render->Blit(tile[i], 0, 0);
+	item = item->next;
 }
 
 // Called before quitting

@@ -102,7 +102,7 @@ private:
 	bool				tilesets_loaded;
 	bool				layers_loaded;
 
-	SDL_Texture* tile;
+	SDL_Texture** tile;
 	bool load_tex = true;
 };
 
