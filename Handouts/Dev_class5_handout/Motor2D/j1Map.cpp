@@ -37,27 +37,28 @@ void j1Map::Draw()
 
 	while (draw_tilesets != NULL)
 	{
-
 		while (draw_layers != NULL) {
 
 			for (int i = 0; i < draw_layers->data->width; i++) {
-				for (int j = 0; i < draw_layers->data->height; j++) {
+				for (int j = 0; j < draw_layers->data->height; j++) {
 
 					if (draw_layers->data->Get(i, j) != 0) {
-						//SDL_Texture*
-						//App->render->Blit();
+
+						SDL_Rect rect =	draw_tilesets->data->GetTileRect(draw_layers->data->Get(i, j));
+						SDL_Rect* section = &rect;
+
+						iPoint world = MapToWorld(i, j);
+
+						App->render->Blit(draw_tilesets->data->texture, world.x, world.y, section);
 					}
 				}
 			}
-
 			draw_layers = draw_layers->next;
 		}
-
 		draw_tilesets = draw_tilesets->next;
 	}
 	
 		// TODO 9: Complete the draw function
-
 }
 
 
@@ -110,7 +111,6 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
-
 	// Clean up the pugui tree
 	map_file.reset();
 
@@ -158,7 +158,18 @@ bool j1Map::Load(const char* file_name)
 
 	// TODO 4: Iterate all layers and load each of them
 	// Load layer info ----------------------------------------------
+	pugi::xml_node layer;
+	for (layer = map_file.child("map").child("layer"); layer && ret; layer = layer.next_sibling("layer"))
+	{
+		MapLayer* set = new MapLayer();
 
+		if (ret == true)
+		{
+			ret = LoadLayer(layer, set);
+		}
+
+		data.layers.add(set);
+	}
 
 	if(ret == true)
 	{
@@ -332,11 +343,14 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->width = node.attribute("width").as_uint();
 	layer->height = node.attribute("height").as_uint();
 
+	layer->data = new uint[layer->width * layer->height];
+
 	memset(layer->data, 0, layer->width * layer->height);
+	
 	int i = 0;
 
-	for (pugi::xml_node tile_gid = node.child("data").child("tile"); tile_gid; tile_gid.next_sibling("tile")) {
-		layer->data[i] = node.attribute("gid").as_uint();
+	for (pugi::xml_node tile_gid = node.child("data").child("tile"); tile_gid; tile_gid =  tile_gid.next_sibling("tile")) {
+		layer->data[i] = tile_gid.attribute("gid").as_uint();
 		i++;
 	}
 
@@ -345,31 +359,5 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 inline uint MapLayer::Get(int x, int y) const {
 
-	int number = 0;
-
-	int i = 0; //rows
-	int j = 0; //columns
-
-	for (int i = 0; i <= width; i++) {
-
-
-		if (i == width) {
-			j++;
-
-		}
-
-	}
-
-}
-
-SDL_Rect TileSet::GetTileRect(int id) const {
-	SDL_Rect to_return;
-
-	to_return.x = tile_width;
-	to_return.y = tile_height;
-
-	to_return.w = tile_width;
-	to_return.h = tile_height;
-
-
+	return data[width * y + x];
 }

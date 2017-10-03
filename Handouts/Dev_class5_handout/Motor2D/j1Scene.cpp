@@ -30,7 +30,10 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load("hello2.tmx");
+	p2SString tmp("%s%s", App->name.GetString(), ".tmx");
+
+	App->map->Load(tmp.GetString());
+
 	return true;
 }
 

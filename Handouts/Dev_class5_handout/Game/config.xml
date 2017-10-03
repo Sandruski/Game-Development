@@ -24,6 +24,12 @@
 
   <map>
     <folder>maps/</folder>
+    <map>
+      <name name="hello2" load="false"></name>
+      <name name="Sandra" load="true"></name>
+      <name name="sewers" load="false"></name>
+      <name name="orthogonal-outside" load="false"></name>
+    </map>
   </map>
 
 </config>

@@ -49,6 +49,9 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
+	// MY ATTRIBUTE FOR MY METHOD!!!
+	p2SString name = nullptr;
+
 private:
 
 	// Load config file
@@ -72,6 +75,10 @@ private:
 	// Load / Save
 	bool LoadGameNow();
 	bool SavegameNow() const;
+
+	// MY METHOD!!!
+	// Choose a map to load
+	p2SString MapToLoad(pugi::xml_node& config_node) const;
 
 public:
 

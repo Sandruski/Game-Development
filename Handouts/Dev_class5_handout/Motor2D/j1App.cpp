@@ -71,6 +71,8 @@ bool j1App::Awake()
 		
 	config = LoadConfig(config_file);
 
+	name = MapToLoad(config);
+
 	if(config.empty() == false)
 	{
 		// self-config
@@ -362,4 +364,18 @@ bool j1App::SavegameNow() const
 	data.reset();
 	want_to_save = false;
 	return ret;
+}
+
+p2SString j1App::MapToLoad(pugi::xml_node& config_node) const {
+
+	p2SString map_name = nullptr;
+
+	pugi::xml_node map = config_node.child("map").child("map");
+
+	for (pugi::xml_node name = map.child("name"); name; name = name.next_sibling("name")) {
+		if (name.attribute("load").as_bool())
+			map_name = name.attribute("name").as_string();
+	}
+
+	return map_name;
 }
