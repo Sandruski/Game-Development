@@ -66,23 +66,31 @@ iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
 
-	ret.x = x * data.tile_width;
-	ret.y = y * data.tile_height;
+	if (data.type == MAPTYPE_ORTHOGONAL) {
+		ret.x = x * data.tile_width;
+		ret.y = y * data.tile_height;
+
+	}
+	else if (data.type == MAPTYPE_ISOMETRIC) {
+		ret.x = (x - y) * data.tile_width * 0.5f;
+		ret.y = (x + y) * data.tile_height * 0.5f;
+	}
 
 	return ret;
 }
 
-iPoint j1Map::MouseTile(int x, int y) const
-{
+iPoint j1Map::WorldToMap(int x, int y) const {
+	
 	iPoint ret;
 
 	if (data.type == MAPTYPE_ORTHOGONAL) {
 		ret.x = x / data.tile_width;
 		ret.y = y / data.tile_height;
+
 	}
-	else {
-		ret.x = 0;
-		ret.y = 0;
+	else if (data.type == MAPTYPE_ISOMETRIC) {
+		ret.x = y / data.tile_height + x / data.tile_width;
+		ret.y = y / data.tile_height - x / data.tile_width;
 	}
 
 	return ret;

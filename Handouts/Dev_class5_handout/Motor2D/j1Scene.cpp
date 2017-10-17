@@ -30,9 +30,8 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	//p2SString tmp("%s%s", App->name.GetString(), ".tmx");
-
-	App->map->Load("sewers.tmx");
+	//App->map->Load("hello2.tmx");
+	App->map->Load("isometric_grass_and_water.tmx");
 
 	return true;
 }
@@ -71,10 +70,11 @@ bool j1Scene::Update(float dt)
 	// "Map:%dx%d Tiles:%dx%d Tilesets:%d"
 	iPoint mouse;
 	App->input->GetMousePosition(mouse.x, mouse.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Mouse:%d,%d",
+
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
 					App->map->data.width, App->map->data.height,
 					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count(), App->map->MouseTile(mouse.x, mouse.y));
+					App->map->data.tilesets.count(), App->map->WorldToMap(mouse.x, mouse.y));
 
 	App->win->SetTitle(title.GetString());
 	return true;

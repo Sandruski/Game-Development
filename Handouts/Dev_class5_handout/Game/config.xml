@@ -11,7 +11,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="2"/>
+    <resolution width="1024" height="768" scale="1"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -23,7 +23,7 @@
   </file_system>
 
   <map>
-    <folder>Assets/Sprites/Maps/</folder>
+    <folder>maps/</folder>
     <maps size="2">
       <name name="hello2" index="0"></name>
       <name name="sewers" index="1"></name>
