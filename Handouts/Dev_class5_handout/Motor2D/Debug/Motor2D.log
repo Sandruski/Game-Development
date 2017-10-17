@@ -1,3 +1,5 @@
-﻿  j1Scene.cpp
+﻿  j1Map.cpp
+c:\users\disob\documents\github\game-development\handouts\dev_class5_handout\motor2d\j1map.cpp(42): warning C4018: '<': no coinciden signed/unsigned
+c:\users\disob\documents\github\game-development\handouts\dev_class5_handout\motor2d\j1map.cpp(43): warning C4018: '<': no coinciden signed/unsigned
   Motor2D.vcxproj -> C:\Users\disob\Documents\GitHub\Game-Development\Handouts\Dev_class5_handout\Debug\Motor 2D.exe
   Motor2D.vcxproj -> C:\Users\disob\Documents\GitHub\Game-Development\Handouts\Dev_class5_handout\Debug\Motor 2D.pdb (Partial PDB)

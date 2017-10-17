@@ -11,7 +11,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="1"/>
+    <resolution width="1024" height="768" scale="2"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -23,13 +23,11 @@
   </file_system>
 
   <map>
-    <folder>maps/</folder>
-    <map>
-      <name name="hello2" load="false"></name>
-      <name name="Sandra" load="true"></name>
-      <name name="sewers" load="false"></name>
-      <name name="orthogonal-outside" load="false"></name>
-    </map>
+    <folder>Assets/Sprites/Maps/</folder>
+    <maps size="2">
+      <name name="hello2" index="0"></name>
+      <name name="sewers" index="1"></name>
+    </maps>
   </map>
 
 </config>

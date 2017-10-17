@@ -33,10 +33,10 @@ void j1Map::Draw()
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
 	p2List_item<TileSet*>* draw_tilesets = data.tilesets.start;
-	p2List_item<MapLayer*>* draw_layers = data.layers.start;
 
 	while (draw_tilesets != NULL)
 	{
+		p2List_item<MapLayer*>* draw_layers = data.layers.start;
 		while (draw_layers != NULL) {
 
 			for (int i = 0; i < draw_layers->data->width; i++) {
@@ -68,6 +68,22 @@ iPoint j1Map::MapToWorld(int x, int y) const
 
 	ret.x = x * data.tile_width;
 	ret.y = y * data.tile_height;
+
+	return ret;
+}
+
+iPoint j1Map::MouseTile(int x, int y) const
+{
+	iPoint ret;
+
+	if (data.type == MAPTYPE_ORTHOGONAL) {
+		ret.x = x / data.tile_width;
+		ret.y = y / data.tile_height;
+	}
+	else {
+		ret.x = 0;
+		ret.y = 0;
+	}
 
 	return ret;
 }
