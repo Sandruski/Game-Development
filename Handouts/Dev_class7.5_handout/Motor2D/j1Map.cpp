@@ -43,6 +43,7 @@ void j1Map::PropagateBFS()
 
 	if (frontier.start != NULL) {
 		iPoint last = frontier.start->data;
+		reconstructed.add(last);
 		frontier.Pop(frontier.start->data);
 
 		if (IsWalkable(last.x + 1, last.y))
@@ -53,6 +54,16 @@ void j1Map::PropagateBFS()
 			n[2] = { last.x, last.y + 1 };
 		if (IsWalkable(last.x, last.y - 1))
 			n[3] = { last.x, last.y - 1 };
+	}
+	else {
+		visit = false;
+		if (reconstructed.end != nullptr) {
+			if (reconstructed.end->data == iPoint(19, 4)) {
+				visit = true;
+				ResetBFS();
+			}
+			reconstructed.del(reconstructed.end);
+		}
 	}
 
 	// TODO 2: For each neighbor, if not visited, add it
@@ -71,9 +82,14 @@ void j1Map::PropagateBFS()
 void j1Map::DrawBFS()
 {
 	iPoint point;
+	p2List_item<iPoint>* item;
 
-	// Draw visited
-	p2List_item<iPoint>* item = visited.start;
+	// Draw visited || reconstructed
+
+	if (visit)
+		item = visited.start;
+	else
+		item = reconstructed.end;
 
 	while (item)
 	{
@@ -85,22 +101,27 @@ void j1Map::DrawBFS()
 
 		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 
-
-		item = item->next;
+		if (visit)
+			item = item->next;
+		else
+			item = item->prev;
 	}
 
 	// Draw frontier
-	for (uint i = 0; i < frontier.Count(); ++i)
-	{
-		point = *(frontier.Peek(i));
-		TileSet* tileset = GetTilesetFromTileId(25);
+	if (visit) {
+		for (uint i = 0; i < frontier.Count(); ++i)
+		{
+			point = *(frontier.Peek(i));
+			TileSet* tileset = GetTilesetFromTileId(25);
 
-		SDL_Rect r = tileset->GetTileRect(25);
-		iPoint pos = MapToWorld(point.x, point.y);
+			SDL_Rect r = tileset->GetTileRect(25);
+			iPoint pos = MapToWorld(point.x, point.y);
 
-		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+			App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+		}
 	}
 }
+
 
 bool j1Map::IsWalkable(int x, int y) const
 {
