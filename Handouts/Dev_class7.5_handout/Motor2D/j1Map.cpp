@@ -39,25 +39,31 @@ void j1Map::PropagateBFS()
 {
 	// TODO 1: If frontier queue contains elements
 	// pop the last one and calculate its 4 neighbors
-	iPoint n[4];
+	iPoint n[4] = { { -1,-1 }, { -1,-1 }, { -1,-1 }, { -1,-1 } };
 
-	if (frontier.GetLast() != NULL) {
-		iPoint last = frontier.GetLast()->data;
-		frontier.Pop(frontier.GetLast()->data);
+	if (frontier.start != NULL) {
+		iPoint last = frontier.start->data;
+		frontier.Pop(frontier.start->data);
 
-		n[0] = { last.x + 1, last.y };
-		n[1] = { last.x - 1, last.y };
-		n[2] = { last.x, last.y + 1 };
-		n[3] = { last.x, last.y - 1 };
+		if (IsWalkable(last.x + 1, last.y))
+			n[0] = { last.x + 1, last.y };
+		if (IsWalkable(last.x - 1, last.y))
+			n[1] = { last.x - 1, last.y };
+		if (IsWalkable(last.x, last.y + 1))
+			n[2] = { last.x, last.y + 1 };
+		if (IsWalkable(last.x, last.y - 1))
+			n[3] = { last.x, last.y - 1 };
 	}
 
 	// TODO 2: For each neighbor, if not visited, add it
 	// to the frontier queue and visited list
 
 	for (int i = 0; i < 4; i++) {
-		if (visited.find(n[i]) == -1) {
-			frontier.Push(n[i]);
-			visited.add(n[i]);
+		if (n[i] != iPoint(-1, -1)) {
+			if (visited.find(n[i]) == -1) {
+				frontier.Push(n[i]);
+				visited.add(n[i]);
+			}
 		}
 	}
 }
@@ -69,7 +75,7 @@ void j1Map::DrawBFS()
 	// Draw visited
 	p2List_item<iPoint>* item = visited.start;
 
-	while(item)
+	while (item)
 	{
 		point = item->data;
 		TileSet* tileset = GetTilesetFromTileId(26);
@@ -78,6 +84,7 @@ void j1Map::DrawBFS()
 		iPoint pos = MapToWorld(point.x, point.y);
 
 		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+
 
 		item = item->next;
 	}
@@ -93,7 +100,6 @@ void j1Map::DrawBFS()
 
 		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 	}
-
 }
 
 bool j1Map::IsWalkable(int x, int y) const
@@ -104,8 +110,12 @@ bool j1Map::IsWalkable(int x, int y) const
 	p2List_item<MapLayer*>*	navigation_layer = data.layers.start;
 	navigation_layer = navigation_layer->next;
 
+
+	LOG("x is: %d", x);
+	LOG("y is: %d", y);
+
 	if (navigation_layer->data->Get(x, y) == 0)
-		return (x <= data.width && y <= data.height);
+		return (x < data.width && x >= 0 && y < data.height && y >= 0);
 
 	return false;
 }
