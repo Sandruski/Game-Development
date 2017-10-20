@@ -99,6 +99,7 @@ void j1Map::PropagateDijkstra()
 				if (MovementCost(neighbors[i].x, neighbors[i].y) >= 0)
 				{
 					new_cost = cost_so_far[curr.x][curr.y] + MovementCost(neighbors[i].x, neighbors[i].y);
+					cost_so_far[neighbors[i].x][neighbors[i].y] = new_cost;
 
 					frontier.Push(neighbors[i], new_cost);
 					visited.add(neighbors[i]);
