@@ -164,6 +164,7 @@ private:
 	uint				cost_so_far[COST_MAP][COST_MAP];
 	p2DynArray<iPoint>	path;
 	SDL_Texture*		tile_x = nullptr;
+	bool				stop; //stop Dijkstra when you reach a certain node
 };
 
 #endif // __j1MAP_H__

@@ -42,6 +42,7 @@ void j1Map::ResetPath()
 	visited.add(iPoint(19, 4));
 	breadcrumbs.add(iPoint(19, 4));
 	memset(cost_so_far, 0, sizeof(uint) * COST_MAP * COST_MAP);
+	stop = false;
 }
 
 void j1Map::Path(int x, int y)
@@ -85,25 +86,30 @@ void j1Map::PropagateDijkstra()
 
 	if (frontier.Pop(curr))
 	{
-		iPoint neighbors[4];
+		if (curr == iPoint(7, 9))
+			stop = true;
 
-		neighbors[0].create(curr.x + 1, curr.y + 0);
-		neighbors[1].create(curr.x + 0, curr.y + 1);
-		neighbors[2].create(curr.x - 1, curr.y + 0);
-		neighbors[3].create(curr.x + 0, curr.y - 1);
+		if (!stop) {
+			iPoint neighbors[4];
 
-		for (uint i = 0; i < 4; ++i)
-		{
-			if (visited.find(neighbors[i]) == -1)
+			neighbors[0].create(curr.x + 1, curr.y + 0);
+			neighbors[1].create(curr.x + 0, curr.y + 1);
+			neighbors[2].create(curr.x - 1, curr.y + 0);
+			neighbors[3].create(curr.x + 0, curr.y - 1);
+
+			for (uint i = 0; i < 4; ++i)
 			{
-				if (MovementCost(neighbors[i].x, neighbors[i].y) >= 0)
+				if (visited.find(neighbors[i]) == -1)
 				{
-					new_cost = cost_so_far[curr.x][curr.y] + MovementCost(neighbors[i].x, neighbors[i].y);
-					cost_so_far[neighbors[i].x][neighbors[i].y] = new_cost;
+					if (MovementCost(neighbors[i].x, neighbors[i].y) >= 0)
+					{
+						new_cost = cost_so_far[curr.x][curr.y] + MovementCost(neighbors[i].x, neighbors[i].y);
+						cost_so_far[neighbors[i].x][neighbors[i].y] = new_cost;
 
-					frontier.Push(neighbors[i], new_cost);
-					visited.add(neighbors[i]);
-					breadcrumbs.add(curr);
+						frontier.Push(neighbors[i], new_cost);
+						visited.add(neighbors[i]);
+						breadcrumbs.add(curr);
+					}
 				}
 			}
 		}
