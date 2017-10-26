@@ -136,6 +136,7 @@ public:
 	// Propagation style
 	void PropagateBFS();
 	void PropagateDijkstra();
+	void PropagateAStar();
 
 private:
 
@@ -150,6 +151,7 @@ private:
 public:
 
 	MapData data;
+	iPoint				goal = { 0,0 };
 
 private:
 
@@ -165,6 +167,7 @@ private:
 	p2DynArray<iPoint>	path;
 	SDL_Texture*		tile_x = nullptr;
 	bool				stop; //stop Dijkstra when you reach a certain node
+
 };
 
 #endif // __j1MAP_H__

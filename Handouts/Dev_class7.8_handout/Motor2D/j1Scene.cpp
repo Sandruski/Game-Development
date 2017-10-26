@@ -84,6 +84,9 @@ bool j1Scene::Update(float dt)
 		App->map->Path(p.x - App->render->camera.x, p.y - App->render->camera.y);
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		App->map->PropagateAStar();
+
 	App->map->Draw();
 
 	int x, y;

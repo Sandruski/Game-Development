@@ -49,30 +49,18 @@ void j1Map::Path(int x, int y)
 {
 	path.Clear();
 
-	iPoint curr;
-
-	iPoint goal = WorldToMap(x, y);
-	curr = goal;
+	goal = WorldToMap(x, y);
+	iPoint curr = goal;
 
 	path.PushBack(curr);
 
 	// TODO 2: Follow the breadcrumps to goal back to the origin
 	// add each step into "path" dyn array (it will then draw automatically)
 
-	p2List_item<iPoint>* item = visited.end;
-
-	if (item != NULL) {
-		while (curr != iPoint(19, 4)) {
-
-			curr = breadcrumbs[visited.find(curr)];
-			path.PushBack(curr);
-
-			item = item->prev;
-		}
+	while (curr != breadcrumbs.start->data && visited.find(curr) != -1) {
+		curr = breadcrumbs[visited.find(curr)];
+		path.PushBack(curr);
 	}
-
-	//path.PushBack(WorldToMap(item->data.x, item->data.y));
-
 }
 
 void j1Map::PropagateDijkstra()
@@ -82,7 +70,6 @@ void j1Map::PropagateDijkstra()
 	// on each cell (is already reset to 0 automatically)
 
 	iPoint curr;
-	uint new_cost;
 
 	if (frontier.Pop(curr))
 	{
@@ -103,12 +90,51 @@ void j1Map::PropagateDijkstra()
 				{
 					if (MovementCost(neighbors[i].x, neighbors[i].y) >= 0)
 					{
-						new_cost = cost_so_far[curr.x][curr.y] + MovementCost(neighbors[i].x, neighbors[i].y);
-						cost_so_far[neighbors[i].x][neighbors[i].y] = new_cost;
+						cost_so_far[neighbors[i].x][neighbors[i].y] = cost_so_far[curr.x][curr.y] + MovementCost(neighbors[i].x, neighbors[i].y);
 
-						frontier.Push(neighbors[i], new_cost);
+						frontier.Push(neighbors[i], cost_so_far[neighbors[i].x][neighbors[i].y]);
 						visited.add(neighbors[i]);
 						breadcrumbs.add(curr);
+					}
+				}
+			}
+		}
+	}
+}
+
+void j1Map::PropagateAStar()
+{
+	iPoint curr;
+
+	if (frontier.Pop(curr))
+	{
+		if (curr == goal)
+			stop = true;
+
+		if (!stop) {
+			iPoint neighbors[4];
+
+			neighbors[0].create(curr.x + 1, curr.y + 0);
+			neighbors[1].create(curr.x + 0, curr.y + 1);
+			neighbors[2].create(curr.x - 1, curr.y + 0);
+			neighbors[3].create(curr.x + 0, curr.y - 1);
+
+			for (uint i = 0; i < 4; ++i)
+			{
+				if (visited.find(neighbors[i]) == -1)
+				{
+					if (MovementCost(neighbors[i].x, neighbors[i].y) != -1)
+					{
+						uint new_cost = MovementCost(neighbors[i].x, neighbors[i].y);
+
+						//if (new_cost < cost_so_far[neighbors[i].x][neighbors[i].y] || cost_so_far[neighbors[i].x][neighbors[i].y] == 0) {
+							cost_so_far[neighbors[i].x][neighbors[i].y] = new_cost;
+							
+							frontier.Push(neighbors[i], new_cost + neighbors[i].DistanceNoSqrt(goal));
+
+							visited.add(neighbors[i]);
+							breadcrumbs.add(curr);
+						//}
 					}
 				}
 			}
