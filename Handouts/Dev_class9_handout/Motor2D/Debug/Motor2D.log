@@ -1,0 +1,22 @@
+﻿  j1App.cpp
+c:\users\sandraag3\documents\github\game-development\handouts\dev_class9_handout\motor2d\j1app.cpp(183): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\sandraag3\documents\github\game-development\handouts\dev_class9_handout\motor2d\j1app.cpp(189): warning C4244: 'initializing': conversion from 'double' to 'uint32', possible loss of data
+c:\users\sandraag3\documents\github\game-development\handouts\dev_class9_handout\motor2d\j1app.cpp(203): warning C4244: '=': conversion from 'uint64' to 'uint32', possible loss of data
+c:\users\sandraag3\documents\github\game-development\handouts\dev_class9_handout\motor2d\j1app.cpp(207): warning C4477: 'sprintf_s' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 6 has type 'uint64'
+  c:\users\sandraag3\documents\github\game-development\handouts\dev_class9_handout\motor2d\j1app.cpp(207): note: consider using '%llu' in the format string
+  c:\users\sandraag3\documents\github\game-development\handouts\dev_class9_handout\motor2d\j1app.cpp(207): note: consider using '%I64u' in the format string
+  Generating Code...
+  Compiling...
+  j1Scene.cpp
+  j1Main.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  j1Window.cpp
+  j1Textures.cpp
+  j1Render.cpp
+  j1Pathfinding.cpp
+  j1Map.cpp
+  j1Input.cpp
+  j1Audio.cpp
+  Motor2D.vcxproj -> C:\Users\sandraag3\Documents\GitHub\Game-Development\Handouts\Dev_class9_handout\Debug\Development - Class 9 Handout.exe
+  Motor2D.vcxproj -> C:\Users\sandraag3\Documents\GitHub\Game-Development\Handouts\Dev_class9_handout\Debug\Development - Class 9 Handout.pdb (Partial PDB)
