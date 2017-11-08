@@ -1,0 +1,6 @@
+﻿  j1App.cpp
+c:\users\sandraag3\desktop\dev_class10_handout\motor2d\j1app.cpp(202): warning C4477: 'sprintf_s' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 5 has type 'uint64'
+  c:\users\sandraag3\desktop\dev_class10_handout\motor2d\j1app.cpp(202): note: consider using '%llu' in the format string
+  c:\users\sandraag3\desktop\dev_class10_handout\motor2d\j1app.cpp(202): note: consider using '%I64u' in the format string
+  Motor2D.vcxproj -> C:\Users\sandraag3\Desktop\Dev_class10_handout\Debug\Development - Class 10.exe
+  Motor2D.vcxproj -> C:\Users\sandraag3\Desktop\Dev_class10_handout\Debug\Development - Class 10.pdb (Partial PDB)
